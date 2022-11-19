@@ -1,0 +1,39 @@
+@use '../../theme/variables';
+
+.searchBar {
+    display: flex;
+    flex-shrink: 0;
+    font-family: 'Montserrat', sans-serif;
+
+    @media screen and (max-width: variables.$small) {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    div {
+        border-radius: 0;
+        background-color: #FFFFFF;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    input {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    button {
+        border-radius: 0;
+        background-color: rgba($color: #F76260, $alpha: 0.7);
+
+        &:hover {
+            background-color: #F76260;
+        }
+    }
+}
+
+.searchInput {
+    background-color: #FFFFFF;
+    flex: 1;
+    padding: 12px 14px;
+    min-width: 200px;
+    height: 56px;
+}

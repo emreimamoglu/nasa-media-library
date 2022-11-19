@@ -1,0 +1,24 @@
+@use '../../theme/variables';
+
+.layout{
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    background-color: #000000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bodyWrapper{
+    min-height: 100%;
+    position: relative;
+}
+
+.topBarWrapper{
+    height: 40%;
+}
+
+.footerWrapper{
+    height: 10%;
+}

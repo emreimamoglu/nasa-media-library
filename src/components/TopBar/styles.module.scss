@@ -1,0 +1,22 @@
+@use '../../theme/variables';
+
+.topbar {
+    width: 100%;
+    height: 100px;
+    background-color: variables.$topbar-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    
+    h1 {
+        font-size: variables.$font-large;
+        font-weight: 700;
+        letter-spacing: 0.59em;
+        color: variables.$topbar-text-color;
+    }
+}
+
+.headerText{
+    cursor: pointer;
+}
