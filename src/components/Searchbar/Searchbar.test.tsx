@@ -4,6 +4,10 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { act } from 'react-dom/test-utils';
 import Searchbar from '.';
 
+/**
+ * @jest-environment jsdom
+ */
+
 describe('Searchbar', () => {
     it('tests search action validation failuire', async () => {
         render(
