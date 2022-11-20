@@ -3,6 +3,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { act } from 'react-dom/test-utils';
 import Searchbar from '.';
+import { BrowserRouter } from 'react-router-dom';
 
 /**
  * @jest-environment jsdom
@@ -12,7 +13,9 @@ describe('Searchbar', () => {
     it('tests search action validation failuire', async () => {
         render(
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Searchbar />
+                <BrowserRouter>
+                    <Searchbar />
+                </BrowserRouter>
             </LocalizationProvider>,
         );
         const searchButton = await screen.findByRole('button', {
@@ -27,7 +30,9 @@ describe('Searchbar', () => {
     it('tests search action validation pass', async () => {
         render(
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Searchbar />
+                <BrowserRouter>
+                    <Searchbar />
+                </BrowserRouter>
             </LocalizationProvider>,
         );
         const searchInput = await screen.findByPlaceholderText('Search Nasa Media');
