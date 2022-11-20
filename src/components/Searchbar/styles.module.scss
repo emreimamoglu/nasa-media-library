@@ -23,6 +23,7 @@
     button {
         border-radius: 0;
         background-color: rgba($color: #F76260, $alpha: 0.7);
+        max-height: 56px;
 
         &:hover {
             background-color: #F76260;
