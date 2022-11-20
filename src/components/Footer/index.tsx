@@ -11,7 +11,7 @@ const Footer = () => {
                 <IconButton className={styles.iconBox} onClick={() => openInNewTab('https://www.instagram.com/nasa')}>
                     <InstagramIcon />
                 </IconButton>
-                <IconButton className={styles.iconBox} onClick={() => openInNewTab('https://www.twitter.com/NASA')}>
+                <IconButton className={styles.iconBox} onClick={() => openInNewTab('https://www.twitter.com/nasa')}>
                     <TwitterIcon />
                 </IconButton>
             </Box>
