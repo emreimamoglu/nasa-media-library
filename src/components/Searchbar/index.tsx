@@ -4,6 +4,7 @@ import { Field, useFormik, FieldProps, FormikProvider } from 'formik';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import * as yup from 'yup';
 import format from 'date-fns/format';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { searchMedia } from '../../services/NasaService';
 import { useMediaContext } from '../../context';
 import { FormikValues } from './types';
@@ -11,13 +12,18 @@ import styles from './styles.module.scss';
 
 const Searchbar = () => {
     const { setList } = useMediaContext();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     const handleSubmit = ({ searchText, startDate, endDate }: any) => {
-        if (searchText) {
-            searchMedia(searchText, startDate, endDate)
-                .then((res) => res.data)
-                .then((res) => setList(res.collection.items));
-        }
+        navigate({
+            pathname: '/',
+            search: createSearchParams({
+                searchText,
+                ...(startDate ? { startDate } : {}),
+                ...(endDate ? { endDate } : {}),
+            }).toString(),
+        });
     };
     const formik = useFormik<FormikValues>({
         initialValues: {
@@ -41,6 +47,16 @@ const Searchbar = () => {
             .then((res) => res.data)
             .then((res) => setList(res.collection.items));
     }, []);
+
+    useEffect(() => {
+        const text = searchParams.get('searchText');
+
+        if (text) {
+            searchMedia(text, searchParams.get('startDate'), searchParams.get('endDate'))
+                .then((res) => res.data)
+                .then((res) => setList(res.collection.items));
+        }
+    }, [searchParams]);
 
     return (
         <form onSubmit={formik.handleSubmit}>

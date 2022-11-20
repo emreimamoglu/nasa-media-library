@@ -5,7 +5,6 @@ import { openInNewTab } from '../../utils';
 import styles from './styles.module.scss';
 
 const Footer = () => {
-
     return (
         <Box className={styles.footer}>
             <Box className={styles.iconBox}>

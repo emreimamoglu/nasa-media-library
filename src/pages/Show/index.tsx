@@ -32,7 +32,7 @@ const Show = () => {
                 {detail && (
                     <>
                         <Box className={styles.backIcon}>
-                            <IconButton onClick={() => navigate('/')}>
+                            <IconButton onClick={() => navigate(-1)}>
                                 <ArrowBackRounded />
                             </IconButton>
                         </Box>

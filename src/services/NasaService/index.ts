@@ -4,10 +4,10 @@ import { IMediaItem, INasaMediaResponse } from './types';
 const baseUrl = 'https://images-api.nasa.gov';
 
 /**
- * 
- * @param query 
- * @param startDate 
- * @param endDate 
+ *
+ * @param query
+ * @param startDate
+ * @param endDate
  * @returns {INasaMediaResponse} image collection
  */
 export const searchMedia = (query: string, startDate?: string | null, endDate?: string | null) => {
@@ -22,10 +22,10 @@ export const searchMedia = (query: string, startDate?: string | null, endDate?: 
 };
 
 /**
- * 
- * @param url 
+ *
+ * @param url
  * @returns {string[]} array of urls for different image sizes
  */
-export const getMediaDetails = (url : string) => {
+export const getMediaDetails = (url: string) => {
     return axios.get<string[]>(url);
-}
+};
