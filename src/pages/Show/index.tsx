@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ArrowBackRounded } from '@mui/icons-material';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,15 +10,19 @@ import { getMediaDetails } from '../../services/NasaService';
 
 const Show = () => {
     const [image, setImage] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
     const { detail } = useMediaContext();
     const navigate = useNavigate();
 
     useEffect(() => {
         if (detail) {
+            setLoading(true)
             getMediaDetails(detail.href)
                 .then((res) => res.data)
                 .then((res) => {
                     setImage(res[0].split('.').pop() === 'tif' ? res[1] : res[0]);
+                }).finally(() => {
+                    setLoading(false)
                 });
         }
     }, []);
@@ -26,7 +30,8 @@ const Show = () => {
     return (
         <Box className={styles.container}>
             <Box className={styles.leftContainer}>
-                <Box className={styles.imageContainer}>{image && <img src={image} alt={detail?.data[0].title} />}</Box>
+                {!loading && <Box className={styles.imageContainer}>{image && <img src={image} alt={detail?.data[0].title} />}</Box>}
+                {loading && <CircularProgress sx={{color: 'gray'}}/>}
             </Box>
             <Box className={styles.rightContainer}>
                 {detail && (
