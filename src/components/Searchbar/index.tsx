@@ -38,7 +38,7 @@ const Searchbar = () => {
                 .min(3, 'Text should be at least 3 characters')
                 .required('Search Field is required'),
             startDate: yup.date().nullable(),
-            endDate: yup.date().nullable(),
+            endDate: yup.date().min(yup.ref('startDate'), 'End date must be older than start date').nullable(),
         }),
     });
 
@@ -58,6 +58,8 @@ const Searchbar = () => {
         }
     }, [searchParams]);
 
+    console.log(formik);
+
     return (
         <form onSubmit={formik.handleSubmit}>
             <Box className={styles.searchBar}>
@@ -76,36 +78,51 @@ const Searchbar = () => {
                         )}
                     </Field>
                     <Field name="startDate">
-                        {({ field: { value }, form: { values, setFieldValue } }: FieldProps) => (
+                        {({ field: { value }, form: { values, setFieldValue, touched, errors } }: FieldProps) => (
                             <MobileDatePicker
                                 inputFormat="yyyy"
                                 views={['year']}
                                 label={!values.startDate && 'Start Date'}
                                 renderInput={(params) => (
-                                    <TextField {...params} variant="outlined" InputLabelProps={{ shrink: false }} />
+                                    <TextField
+                                        {...params}
+                                        variant="outlined"
+                                        InputLabelProps={{ shrink: false }}
+                                        error={touched.startDate && Boolean(errors.startDate)}
+                                        helperText={touched.startDate && errors.startDate?.toString()}
+                                    />
                                 )}
                                 InputProps={{
                                     className: styles.datePicker,
                                 }}
                                 value={value}
                                 onChange={(value) => setFieldValue('startDate', format(new Date(value), 'yyyy'))}
+                                className={styles.dateInput}
                             />
                         )}
                     </Field>
                     <Field name="endDate">
-                        {({ field: { value }, form: { values, setFieldValue } }: FieldProps) => (
+                        {({ field: { value }, form: { values, setFieldValue, touched, errors } }: FieldProps) => (
                             <MobileDatePicker
                                 inputFormat="yyyy"
                                 views={['year']}
                                 label={!values.endDate && 'End Date'}
                                 renderInput={(params) => (
-                                    <TextField {...params} variant="outlined" InputLabelProps={{ shrink: false }} />
+                                    <TextField
+                                        {...params}
+                                        variant="outlined"
+                                        InputLabelProps={{ shrink: false }}
+                                        error={touched.endDate && Boolean(errors.endDate)}
+                                        helperText={touched.endDate && errors.endDate?.toString()}
+                                    />
                                 )}
                                 InputProps={{
                                     className: styles.datePicker,
                                 }}
                                 value={value}
                                 onChange={(value) => setFieldValue('endDate', format(new Date(value), 'yyyy'))}
+                                minDate={values.startDate}
+                                className={styles.dateInput}
                             />
                         )}
                     </Field>
