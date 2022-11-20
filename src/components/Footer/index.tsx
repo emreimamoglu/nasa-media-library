@@ -1,12 +1,10 @@
 import { Box, IconButton } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import { openInNewTab } from '../../utils';
 import styles from './styles.module.scss';
 
 const Footer = () => {
-    const openInNewTab = (url: string) => {
-        window.open(url, '_blank', 'noopener,noreferrer');
-    };
 
     return (
         <Box className={styles.footer}>
