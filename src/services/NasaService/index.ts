@@ -1,9 +1,16 @@
 import axios from 'axios';
-import { INasaMediaResponse } from './types';
+import { IMediaItem, INasaMediaResponse } from './types';
 
 const baseUrl = 'https://images-api.nasa.gov';
 
-const searchMedia = (query: string, startDate?: string | null, endDate?: string | null) => {
+/**
+ * 
+ * @param query 
+ * @param startDate 
+ * @param endDate 
+ * @returns {INasaMediaResponse} image collection
+ */
+export const searchMedia = (query: string, startDate?: string | null, endDate?: string | null) => {
     return axios.get<INasaMediaResponse>(`${baseUrl}/search`, {
         params: {
             q: query,
@@ -14,4 +21,11 @@ const searchMedia = (query: string, startDate?: string | null, endDate?: string 
     });
 };
 
-export { searchMedia };
+/**
+ * 
+ * @param url 
+ * @returns {string[]} array of urls for different image sizes
+ */
+export const getMediaDetails = (url : string) => {
+    return axios.get<string[]>(url);
+}

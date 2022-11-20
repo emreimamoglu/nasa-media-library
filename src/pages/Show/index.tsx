@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMediaContext } from '../../context';
 import styles from './styles.module.scss';
+import { getMediaDetails } from '../../services/NasaService';
 
 const Show = () => {
     const [image, setImage] = useState<string | null>(null);
@@ -14,8 +15,7 @@ const Show = () => {
 
     useEffect(() => {
         if (detail) {
-            axios
-                .get(detail.href)
+            getMediaDetails(detail.href)
                 .then((res) => res.data)
                 .then((res) => {
                     setImage(res[0].split('.').pop() === 'tif' ? res[1] : res[0]);
