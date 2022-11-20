@@ -58,8 +58,6 @@ const Searchbar = () => {
         }
     }, [searchParams]);
 
-    console.log(formik);
-
     return (
         <form onSubmit={formik.handleSubmit}>
             <Box className={styles.searchBar}>

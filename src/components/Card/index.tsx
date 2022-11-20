@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { useMediaContext } from '../../context';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import { IMediaItem } from '../../services/NasaService/types';
 import styles from './styles.module.scss';
 
@@ -10,11 +9,14 @@ interface CardProps {
 
 const Card = ({ photo }: CardProps) => {
     const navigate = useNavigate();
-    const { setDetail } = useMediaContext();
 
     const handleClick = (detail: IMediaItem) => {
-        setDetail(detail);
-        navigate('/show');
+        navigate({
+            pathname: 'show',
+            search: createSearchParams({
+                nasaId: detail.data[0].nasa_id,
+            }).toString(),
+        });
     };
 
     return (

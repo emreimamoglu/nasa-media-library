@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IMediaItem, INasaMediaResponse } from './types';
+import { INasaMediaResponse } from './types';
 
 const baseUrl = 'https://images-api.nasa.gov';
 
@@ -17,6 +17,19 @@ export const searchMedia = (query: string, startDate?: string | null, endDate?: 
             media_type: 'image',
             ...(startDate ? { year_start: startDate } : {}),
             ...(endDate ? { year_end: endDate } : {}),
+        },
+    });
+};
+
+/**
+ *
+ * @param id
+ * @returns {INasaMediaResponse} a single image data
+ */
+export const getById = (id: string) => {
+    return axios.get<INasaMediaResponse>(`${baseUrl}/search`, {
+        params: {
+            nasa_id: id,
         },
     });
 };

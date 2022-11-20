@@ -3,26 +3,32 @@ import { ArrowBackRounded } from '@mui/icons-material';
 import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useMediaContext } from '../../context';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { getById, getMediaDetails } from '../../services/NasaService';
 import styles from './styles.module.scss';
-import { getMediaDetails } from '../../services/NasaService';
 
 const Show = () => {
     const [image, setImage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
-    const { detail } = useMediaContext();
+    const [detail, setDetail] = useState<any>(null);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        if (detail) {
-            setLoading(true)
-            getMediaDetails(detail.href)
+        const id = searchParams.get('nasaId');
+
+        if (id) {
+            setLoading(true);
+            getById(id)
                 .then((res) => res.data)
                 .then((res) => {
-                    setImage(res[0].split('.').pop() === 'tif' ? res[1] : res[0]);
-                }).finally(() => {
-                    setLoading(false)
+                    setDetail(res.collection.items[0]);
+                    getMediaDetails(res.collection.items[0].href)
+                        .then((res) => res.data)
+                        .then((res) => setImage(res[0].split('.').pop() === 'tif' ? res[1] : res[0]));
+                })
+                .finally(() => {
+                    setLoading(false);
                 });
         }
     }, []);
@@ -30,8 +36,12 @@ const Show = () => {
     return (
         <Box className={styles.container}>
             <Box className={styles.leftContainer}>
-                {!loading && <Box className={styles.imageContainer}>{image && <img src={image} alt={detail?.data[0].title} />}</Box>}
-                {loading && <CircularProgress sx={{color: 'gray'}}/>}
+                {!loading && (
+                    <Box className={styles.imageContainer}>
+                        {image && <img src={image} alt={detail?.data[0].title} />}
+                    </Box>
+                )}
+                {loading && <CircularProgress sx={{ color: 'gray' }} />}
             </Box>
             <Box className={styles.rightContainer}>
                 {detail && (
